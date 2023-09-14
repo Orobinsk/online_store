@@ -20,6 +20,12 @@ const AppRouter = () => {
                             key={route.path}
                         />
                     )}
+                    {publicRoutes.map(route =>
+                        <Route
+                            path={route.path}
+                            element={route.element}
+                            key={route.path}
+                        />)}
                     <Route
                         path="*"
                         element={<Navigate to={SHOP_ROUTE} replace/>}
