@@ -136,6 +136,76 @@ server.get('/shop/devices/:id', (req, res) => {
     }
 });
 
+// Эндпоинт для создания нового типа
+server.post('/shop/type', (req, res) => {
+    try {
+        const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
+        const {types = []} = db;
+
+        const {name} = req.body;
+
+        // Проверяем, существует ли тип с таким именем
+        const existingType = types.find((type) => type.name === name);
+
+        if (existingType) {
+            return res.status(400).json({message: 'Type already exists'});
+        }
+
+        // Создаем нового типа
+        const newType = {
+            id: types.length + 1, // Генерируем уникальный ID
+            name,
+        };
+
+        // Добавляем новый тип в базу данных
+        types.push(newType);
+        db.types = types;
+
+        // Сохраняем обновленную базу данных в файл
+        fs.writeFileSync(path.resolve(__dirname, 'db.json'), JSON.stringify(db, null, 2), 'UTF-8');
+
+        return res.json(newType);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({message: e.message});
+    }
+});
+
+// Эндпоинт для создания нового бренда
+server.post('/shop/brand', (req, res) => {
+    try {
+        const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
+        const {brands = []} = db;
+
+        const {name} = req.body;
+
+        // Проверяем, существует ли тип с таким именем
+        const existingBrand = brands.find((brand) => brand.name === name);
+
+        if (existingBrand) {
+            return res.status(400).json({message: 'Brand already exists'});
+        }
+
+        // Создаем нового типа
+        const newBrand = {
+            id: brands.length + 1, // Генерируем уникальный ID
+            name,
+        };
+
+        // Добавляем новый тип в базу данных
+        brands.push(newBrand);
+        db.brands = brands;
+
+        // Сохраняем обновленную базу данных в файл
+        fs.writeFileSync(path.resolve(__dirname, 'db.json'), JSON.stringify(db, null, 2), 'UTF-8');
+
+        return res.json(newBrand);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({message: e.message});
+    }
+});
+
 server.use(router);
 
 // проверяем, авторизован ли пользователь

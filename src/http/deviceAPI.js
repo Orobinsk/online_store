@@ -7,6 +7,11 @@ export const createType = async (type) => {
     return response
 }
 
+export const createBrand = async (brand) => {
+    const response = await $host.post('/shop/brand', brand)
+    return response.data
+}
+
 export const fetchTypes = async () => {
     const response = await $host.get('/shop/types')
     return response.data
