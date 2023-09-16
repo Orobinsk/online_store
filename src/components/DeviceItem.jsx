@@ -11,7 +11,7 @@ const DeviceItem = ({device}) => {
             <Card style={{width:150, cursor:"pointer"}} border={"light"}>
                 <Image width={150} height={150} src={device.img}/>
                 <div className="d-flex justify-content-between m-1">
-                    <div className="text-black-50">samsung..</div>
+                    <div className="text-black-50">{device.brand}</div>
                     <div className="d-flex align-items-center">
                         <div>{device.rating}</div>
                         <Image width={18} height={18} src={star}/>

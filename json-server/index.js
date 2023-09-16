@@ -1,6 +1,9 @@
 const fs = require('fs');
 const jsonServer = require('json-server');
 const path = require('path');
+const multer = require('multer');
+const upload = multer();
+
 
 const server = jsonServer.create();
 
@@ -106,8 +109,25 @@ server.get('/shop/devices', (req, res) => {
     try {
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
         const { devices = [] } = db;
+        const totalDevices = devices.length;
 
-        return res.json(devices);
+        let { limit, devicePage } = req.query;
+
+        // По умолчанию, если limit не указан, возвращаем все устройства
+        if (!limit) {
+            return res.json({ devices, totalDevices });
+        }
+
+        let offset= limit*devicePage
+
+        // Преобразуем limit и offset в числа
+        limit = parseInt(limit, 10);
+        // offset = parseInt(offset, 10) || 0;
+
+        // Ограничиваем количество возвращаемых устройств
+        const limitedDevices = devices.slice(offset, offset + limit);
+
+        return res.json({ devices: limitedDevices, totalDevices });
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: e.message });
@@ -192,7 +212,7 @@ server.post('/shop/brand', (req, res) => {
             name,
         };
 
-        // Добавляем новый тип в базу данных
+        // Добавляем новый бренд в базу данных
         brands.push(newBrand);
         db.brands = brands;
 
@@ -200,6 +220,42 @@ server.post('/shop/brand', (req, res) => {
         fs.writeFileSync(path.resolve(__dirname, 'db.json'), JSON.stringify(db, null, 2), 'UTF-8');
 
         return res.json(newBrand);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({message: e.message});
+    }
+});
+
+// Эндпоинт для создания нового девайса
+server.post('/shop/device',upload.none(), (req, res) => {
+    try {
+        const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
+        const {devices = []} = db;
+
+        const newDevice = req.body;
+
+        // Проверяем, существует ли девайс с такими характеристиками
+        const existingDevice = devices.find((device) => device.name === newDevice.name);
+
+        if (existingDevice) {
+            return res.status(400).json({message: 'Device already exists'});
+        }
+
+        // Создаем нового типа
+        const createdDevice = {
+            id: devices.length + 1, // Генерируем уникальный ID
+            ...newDevice,
+            info:JSON.parse(newDevice.info)
+        };
+
+        // Добавляем новый тип в базу данных
+        devices.push(createdDevice);
+        db.devices = devices;
+
+        // Сохраняем обновленную базу данных в файл
+        fs.writeFileSync(path.resolve(__dirname, 'db.json'), JSON.stringify(db, null, 2), 'UTF-8');
+
+        return res.json(createdDevice);
     } catch (e) {
         console.log(e);
         return res.status(500).json({message: e.message});

@@ -6,21 +6,27 @@ import DeviceList from "../components/DeviceList";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {fetchBrands, fetchDevices, fetchTypes} from "../http/deviceAPI";
+import Pages from "../components/Pages";
 
 const Shop = observer(() => {
-    const {device, user} = useContext(Context)
+    const {device} = useContext(Context)
 
     useEffect(() => {
-        Promise.all([fetchTypes(), fetchBrands(), fetchDevices()])
-            .then(([types, brands, devices]) => {
-                device.setTypes(types);
-                device.setBrands(brands);
-                device.setDevices(devices)
-            })
-            .catch((error) => {
-                console.error("Произошла ошибка:", error);
-            });
-    }, [device])
+        fetchTypes().then(types => device.setTypes(types))
+        fetchBrands().then(brands => device.setBrands(brands))
+        fetchDevices(3,0).then(devices => {
+            device.setDevices(devices.devices)
+             device.setTotalCount(devices.totalDevices)
+        })
+    }, [])
+
+    useEffect(()=>{
+        fetchDevices(3,device.page-1).then(devices => {
+            device.setDevices(devices.devices)
+            device.setTotalCount(devices.totalDevices)
+            console.log(devices)
+        })
+    },[device.page])
 
     return (
         <Container>
@@ -31,6 +37,7 @@ const Shop = observer(() => {
                 <Col md={9}>
                     <BrandBar/>
                     <DeviceList/>
+                    <Pages/>
                 </Col>
             </Row>
         </Container>

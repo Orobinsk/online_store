@@ -12,6 +12,11 @@ export const createBrand = async (brand) => {
     return response.data
 }
 
+export const createDevice = async (device) => {
+    const response = await $host.post('/shop/device', device)
+    return response.data
+}
+
 export const fetchTypes = async () => {
     const response = await $host.get('/shop/types')
     return response.data
@@ -22,8 +27,13 @@ export const fetchBrands = async () => {
     return response.data
 }
 
-export const fetchDevices = async () => {
-    const response = await $host.get('/shop/devices')
+export const fetchDevices = async (limit, devicePage) => {
+    const response = await $host.get('/shop/devices',{
+        params: {
+            limit,
+            devicePage,
+        },
+    })
     return response.data
 }
 
