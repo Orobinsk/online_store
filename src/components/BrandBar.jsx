@@ -5,6 +5,13 @@ import {Context} from "../index";
 
 const BrandBar = observer(() => {
     const {device} = useContext(Context)
+
+    const selectBrand=(brand)=>{
+       if (device.selectedBrand!==brand){
+           device.setSelectedBrand(brand)
+       }
+       else  device.setSelectedBrand('')
+    }
     return (
         <Row className="d-flex">
             {device.brands.map(brand =>
@@ -13,7 +20,7 @@ const BrandBar = observer(() => {
                     key={brand.id}
                     className="p-3"
                     border={brand.id === device.selectedBrand.id?'danger':'light'}
-                    onClick={()=> device.setSelectedBrand(brand)}
+                    onClick={()=>selectBrand(brand)}
                 >
                     {brand.name}
                 </Card>)}

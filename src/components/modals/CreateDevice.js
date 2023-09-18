@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-import {Button, Dropdown, Form, Row, Col} from "react-bootstrap";
+import {Button, Col, Dropdown, Form, Row} from "react-bootstrap";
 import {Context} from "../../index";
-import {createDevice, fetchBrands, fetchDevices, fetchTypes} from "../../http/deviceAPI";
+import {createDevice, fetchBrands, fetchTypes} from "../../http/deviceAPI";
 import {observer} from "mobx-react-lite";
 
 const CreateDevice = observer(({show, onHide}) => {
@@ -34,9 +34,9 @@ const CreateDevice = observer(({show, onHide}) => {
         formData.append('price', `${price}`)
         formData.append('img', img)
         formData.append('brand', device.selectedBrand.name)
-        formData.append('typeId', device.selectedType.id)
+        formData.append('typeId', device.selectedType.name)
         formData.append('info', JSON.stringify(info))
-        createDevice(formData).then(data => onHide())
+        createDevice(formData).then(onHide())
     }
 
     return (

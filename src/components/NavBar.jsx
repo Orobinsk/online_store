@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
-import {ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/const";
+import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/const";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
@@ -29,8 +29,15 @@ const NavBar = observer(() => {
                         </Button>
                         <Button
                             variant={"outline-light"}
+                            onClick={() => navigate(BASKET_ROUTE)}
+                            className="ms-2"
+                        >
+                            Корзина
+                        </Button>
+                        <Button
+                            variant={"outline-light"}
                              onClick={() => logOut()}
-                            className="ml-2"
+                            className="ms-2"
                         >
                             Выйти
                         </Button>

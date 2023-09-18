@@ -15,7 +15,7 @@ server.use(jsonServer.bodyParser);
 // Нужно для небольшой задержки, чтобы запрос проходил не мгновенно, имитация реального апи
 server.use(async (req, res, next) => {
     await new Promise((res) => {
-        setTimeout(res, 800);
+        setTimeout(res, 300);
     });
     next();
 });
@@ -108,11 +108,18 @@ server.get('/shop/brands', (req, res) => {
 server.get('/shop/devices', (req, res) => {
     try {
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
-        const { devices = [] } = db;
+        let { devices = [] } = db;
+
+        let { typeName,brandName, limit, devicePage } = req.query;
+
+        // Фильтрация по typeName и brandName
+        if (typeName) {
+            devices = devices.filter(device => device.typeName === typeName);
+        }
+        if (brandName) {
+            devices = devices.filter(device => device.brandName === brandName);
+        }
         const totalDevices = devices.length;
-
-        let { limit, devicePage } = req.query;
-
         // По умолчанию, если limit не указан, возвращаем все устройства
         if (!limit) {
             return res.json({ devices, totalDevices });

@@ -10,6 +10,7 @@ export default class DeviceStore{
         this._page=1
         this._totalCount=0
         this._limit=3
+        this._basket=[2,8]
         makeAutoObservable(this)
     }
 
@@ -36,6 +37,9 @@ export default class DeviceStore{
     setTotalCount(count) {
         this._totalCount = count
     }
+    setBasket(device){
+        this._basket=device
+    }
 
     get types(){
         return this._types
@@ -60,5 +64,8 @@ export default class DeviceStore{
     }
     get limit() {
         return this._limit
+    }
+    get basket() {
+        return this._basket
     }
 }

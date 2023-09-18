@@ -22,7 +22,8 @@
     {
       "id": "1",
       "username": "admin",
-      "password": "123"
+      "password": "123",
+      "role": "admin"
     },
     {
       "id": 2,
@@ -128,7 +129,7 @@
       "img": "https://www.ixbt.com/img/n1/news/2023/6/0/006bWoNYly1hfyn9h67ymj30qe0kiabn_large.jpg",
       "brandId": "2",
       "typeId": "4",
-      "info": "[{\"title\":\"12312\",\"description\":\"3232\",\"number\":1694785633458}]"
+      "info": []
     },
     {
       "id": 7,
@@ -175,7 +176,7 @@
       "name": "апле9",
       "price": "80000",
       "img": "",
-      "brandId": "1",
+      "brandName": "Samsung",
       "typeId": "4",
       "info": []
     },
@@ -205,6 +206,21 @@
       "brand": "Huawei",
       "typeId": "undefined",
       "info": []
+    },
+    {
+      "id": 13,
+      "name": "123",
+      "price": "321",
+      "img": "",
+      "brand": "Google",
+      "typeId": "undefined",
+      "info": [
+        {
+          "title": "23",
+          "description": "321",
+          "number": 1695022007295
+        }
+      ]
     }
   ]
 }

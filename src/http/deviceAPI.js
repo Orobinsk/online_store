@@ -1,4 +1,4 @@
-import {$authHost, $host} from "./index";
+import {$host} from "./index";
 //import jwt_decode from 'jwt-decode';
 
 
@@ -27,9 +27,11 @@ export const fetchBrands = async () => {
     return response.data
 }
 
-export const fetchDevices = async (limit, devicePage) => {
+export const fetchDevices = async (typeName,brandName,limit, devicePage) => {
     const response = await $host.get('/shop/devices',{
         params: {
+            typeName,
+            brandName,
             limit,
             devicePage,
         },
@@ -41,3 +43,8 @@ export const fetchOneDevices = async (id) => {
     const response = await $host.get('/shop/devices/' + id)
      return response.data
 }
+
+// export const fetchTest = async () => {
+//     const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+//     return response.data
+// }

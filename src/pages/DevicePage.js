@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import bigStar from '../assets/bigStar.svg'
 import {useParams} from "react-router-dom";
-import {fetchDevices, fetchOneDevices} from "../http/deviceAPI";
+import {fetchOneDevices} from "../http/deviceAPI";
 
 
 const DevicePage = () => {
@@ -50,14 +50,15 @@ const DevicePage = () => {
             </Row>
             <Row className="d-flex flex-column m-3">
                 <h1>Характеристики</h1>
-                {device.info.map((info, index) =>
+                {device.info?
+                    device.info.map((info, index) =>
                     <Row
                         key={info.number}
                         style={{background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10}}
                     >
                         {info.title}: {info.description}
                     </Row>
-                )}
+                ):null}
             </Row>
         </Container>
     );
