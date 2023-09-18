@@ -13,12 +13,12 @@ server.use(jsonServer.defaults({}));
 server.use(jsonServer.bodyParser);
 
 // Нужно для небольшой задержки, чтобы запрос проходил не мгновенно, имитация реального апи
-server.use(async (req, res, next) => {
-    await new Promise((res) => {
-        setTimeout(res, 300);
-    });
-    next();
-});
+// server.use(async (req, res, next) => {
+//     await new Promise((res) => {
+//         setTimeout(res, 300);
+//     });
+//     next();
+// });
 
 // Эндпоинт для логина
 server.post('/login', (req, res) => {
@@ -114,10 +114,10 @@ server.get('/shop/devices', (req, res) => {
 
         // Фильтрация по typeName и brandName
         if (typeName) {
-            devices = devices.filter(device => device.typeName === typeName);
+            devices = devices.filter(device => device.type === typeName);
         }
         if (brandName) {
-            devices = devices.filter(device => device.brandName === brandName);
+            devices = devices.filter(device => device.brand === brandName);
         }
         const totalDevices = devices.length;
         // По умолчанию, если limit не указан, возвращаем все устройства

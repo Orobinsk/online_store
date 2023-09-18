@@ -10,7 +10,7 @@ export default class DeviceStore{
         this._page=1
         this._totalCount=0
         this._limit=3
-        this._basket=[2,8]
+        this._basket=[]
         makeAutoObservable(this)
     }
 
