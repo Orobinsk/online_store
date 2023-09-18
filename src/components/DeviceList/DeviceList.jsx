@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
 import {observer} from "mobx-react-lite";
-import {Context} from "../index";
-import {Container, Row} from "react-bootstrap";
-import DeviceItem from "./DeviceItem/DeviceItem";
+import {Context} from "../../index";
+import {Button, Card, Container, Row} from "react-bootstrap";
+import DeviceItem from "../DeviceItem/DeviceItem";
+import cls from './DeviceList.module.scss'
 
 const DeviceList = observer(() => {
     const {device} = useContext(Context)
@@ -10,7 +11,6 @@ const DeviceList = observer(() => {
         if(!device.basket.includes(id)){
             device.setBasket([...device.basket,id])
         }
-        console.log(device.basket)
     }
 
     return (
@@ -20,8 +20,17 @@ const DeviceList = observer(() => {
                 <DeviceItem
                     key={device.id}
                     device={device}
-                    addItemBasket={addItemBasket}
-                />
+                >
+                    <Card.Title>{device.price} ₽</Card.Title>
+                    <Button
+                        size={"lg"}
+                        className={cls.btnBuy}
+                        variant="outline-warning"
+                        onClick={()=>addItemBasket(device.id)}
+                    >
+                        Купить
+                    </Button>
+                </DeviceItem>
             ):
                 <Container>
                     <h1>Странно, но ничего нет</h1>
