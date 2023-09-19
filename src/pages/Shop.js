@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import TypeBar from "../components/TypeBar";
 import BrandBar from "../components/BrandBar";
-import DeviceList from "../components/DeviceList/DeviceList";
+import DeviceList from "../components/DeviceList";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {fetchBrands, fetchDevices, fetchTypes} from "../http/deviceAPI";
@@ -14,18 +14,23 @@ const Shop = observer(() => {
     useEffect(() => {
         fetchTypes().then(types => device.setTypes(types))
         fetchBrands().then(brands => device.setBrands(brands))
-        fetchDevices(null,null,device.limit,0).then(devices => {
-            device.setDevices(devices.devices)
-             device.setTotalCount(devices.totalDevices)
-        })
-    }, [])
-
-    useEffect(()=>{
-        fetchDevices(device.selectedType.name, device.selectedBrand.name,device.limit,device.page-1).then(devices => {
+        fetchDevices(JSON.stringify([]), JSON.stringify([]), device.limit, 0).then(devices => {
             device.setDevices(devices.devices)
             device.setTotalCount(devices.totalDevices)
         })
-    },[device.page,device.selectedType, device.selectedBrand])
+        return () => {
+            device.setSelectedBrand([])
+            device.setSelectedType([])
+        }
+    }, [])
+
+    useEffect(() => {
+        fetchDevices(JSON.stringify(device.selectedType), JSON.stringify(device.selectedBrand), device.limit, device.page - 1).then(devices => {
+            device.setDevices(devices.devices)
+            device.setTotalCount(devices.totalDevices)
+        })
+
+    }, [device.page, device.selectedType, device.selectedBrand])
     return (
         <Container>
             <Row className="mt-2">

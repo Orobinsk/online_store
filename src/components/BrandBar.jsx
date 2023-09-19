@@ -6,21 +6,23 @@ import {Context} from "../index";
 const BrandBar = observer(() => {
     const {device} = useContext(Context)
 
-    const selectBrand=(brand)=>{
-       if (device.selectedBrand!==brand){
-           device.setSelectedBrand(brand)
-       }
-       else  device.setSelectedBrand('')
+    const selectBrand = (brand) => {
+        console.log(device.selectedBrand)
+        if (!device.selectedBrand.includes(brand)) {
+            device.setSelectedBrand([...device.selectedBrand, brand])
+        } else {
+            device.setSelectedBrand(device.selectedBrand.filter((oldBrand) => oldBrand !== brand))
+        }
     }
     return (
         <Row className="d-flex">
             {device.brands.map(brand =>
                 <Card
-                    style={{ width: '18rem',cursor:"pointer" }}
+                    style={{width: '18rem', cursor: "pointer"}}
                     key={brand.id}
                     className="p-3"
-                    border={brand.id === device.selectedBrand.id?'danger':'light'}
-                    onClick={()=>selectBrand(brand)}
+                    border={device.selectedBrand.some((prevBrand) => prevBrand.name.includes(brand.name)) ? 'danger' : 'light'}
+                    onClick={() => selectBrand(brand)}
                 >
                     {brand.name}
                 </Card>)}

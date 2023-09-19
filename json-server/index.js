@@ -82,12 +82,12 @@ server.post('/registration', (req, res) => {
 server.get('/shop/types', (req, res) => {
     try {
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
-        const { types = [] } = db;
+        const {types = []} = db;
 
         return res.json(types);
     } catch (e) {
         console.error(e);
-        return res.status(500).json({ message: e.message });
+        return res.status(500).json({message: e.message});
     }
 });
 
@@ -95,12 +95,12 @@ server.get('/shop/types', (req, res) => {
 server.get('/shop/brands', (req, res) => {
     try {
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
-        const { brands = [] } = db;
+        const {brands = []} = db;
 
         return res.json(brands);
     } catch (e) {
         console.error(e);
-        return res.status(500).json({ message: e.message });
+        return res.status(500).json({message: e.message});
     }
 });
 
@@ -108,24 +108,27 @@ server.get('/shop/brands', (req, res) => {
 server.get('/shop/devices', (req, res) => {
     try {
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
-        let { devices = [] } = db;
+        let {devices = []} = db;
 
-        let { typeName,brandName, limit, devicePage } = req.query;
+        let {typeName, brandName, limit, devicePage} = req.query;
 
+        typeName = JSON.parse(typeName)
+        brandName = JSON.parse(brandName)
+        console.log(brandName)
         // Фильтрация по typeName и brandName
-        if (typeName) {
-            devices = devices.filter(device => device.type === typeName);
+        if (typeName && typeName.length > 0) {
+            devices = devices.filter(device => typeName.some(type => device.type.includes(type.name)));
         }
-        if (brandName) {
-            devices = devices.filter(device => device.brand === brandName);
+        if (brandName && brandName.length > 0) {
+            devices = devices.filter(device => brandName.some(brand => device.brand.includes(brand.name)));
         }
         const totalDevices = devices.length;
         // По умолчанию, если limit не указан, возвращаем все устройства
         if (!limit) {
-            return res.json({ devices, totalDevices });
+            return res.json({devices, totalDevices});
         }
 
-        let offset= limit*devicePage
+        let offset = limit * devicePage
 
         // Преобразуем limit и offset в числа
         limit = parseInt(limit, 10);
@@ -134,10 +137,10 @@ server.get('/shop/devices', (req, res) => {
         // Ограничиваем количество возвращаемых устройств
         const limitedDevices = devices.slice(offset, offset + limit);
 
-        return res.json({ devices: limitedDevices, totalDevices });
+        return res.json({devices: limitedDevices, totalDevices});
     } catch (e) {
         console.error(e);
-        return res.status(500).json({ message: e.message });
+        return res.status(500).json({message: e.message});
     }
 });
 
@@ -146,7 +149,7 @@ server.get('/shop/devices/:id', (req, res) => {
     try {
         const id = parseInt(req.params.id)
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
-        const { devices = [] } = db;
+        const {devices = []} = db;
 
         const deviceFromBd = devices.find(
             (device) => device.id === id
@@ -156,10 +159,10 @@ server.get('/shop/devices/:id', (req, res) => {
             return res.json(deviceFromBd);
         }
 
-        return res.status(404).json({ message: 'Device not found' });
+        return res.status(404).json({message: 'Device not found'});
     } catch (e) {
         console.error(e);
-        return res.status(500).json({ message: e.message });
+        return res.status(500).json({message: e.message});
     }
 });
 
@@ -234,7 +237,7 @@ server.post('/shop/brand', (req, res) => {
 });
 
 // Эндпоинт для создания нового девайса
-server.post('/shop/device',upload.none(), (req, res) => {
+server.post('/shop/device', upload.none(), (req, res) => {
     try {
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
         const {devices = []} = db;
@@ -252,7 +255,7 @@ server.post('/shop/device',upload.none(), (req, res) => {
         const createdDevice = {
             id: devices.length + 1, // Генерируем уникальный ID
             ...newDevice,
-            info:JSON.parse(newDevice.info)
+            info: JSON.parse(newDevice.info)
         };
 
         // Добавляем новый тип в базу данных
@@ -280,7 +283,6 @@ server.use((req, res, next) => {
 
     next();
 });
-
 
 
 // запуск сервера

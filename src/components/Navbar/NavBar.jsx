@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
-import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/const";
-import {Context} from "../index";
+import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../../utils/const";
+import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
+import cls from './Navbar.module.scss'
 
 const NavBar = observer(() => {
-    const {user} = useContext(Context)
+    const {user,device} = useContext(Context)
     const navigate = useNavigate()
 
     const logOut = () => {
@@ -32,7 +33,14 @@ const NavBar = observer(() => {
                             onClick={() => navigate(BASKET_ROUTE)}
                             className="ms-2"
                         >
-                            Корзина
+                            <div className={cls.basket}>
+                                Корзина
+                                {device.basket.length>0 &&
+                                    <div className={cls.basketBadge}>
+                                        {device.basket.length}
+                                    </div>
+                                }
+                            </div>
                         </Button>
                         <Button
                             variant={"outline-light"}

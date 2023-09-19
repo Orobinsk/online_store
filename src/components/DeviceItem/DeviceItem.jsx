@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Col, Image, Row, Stack} from "react-bootstrap";
+import {Card, Col, Image, Row} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {DEVICE_ROUTE} from "../../utils/const";
 import cls from './DeviceItem.module.scss'
@@ -27,7 +27,7 @@ const DeviceItem = ({device, children}) => {
                         </Card.Text>
                     </div>
                 </Col>
-                <Col xs={12} sm={8} md={3} className={'d-flex flex-column justify-content-start align-items-end'}>
+                <Col  md={3} className={'d-flex flex-column justify-content-start align-items-end'}>
                     {children}
                 </Col>
             </Row>

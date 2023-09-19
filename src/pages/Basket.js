@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
-import { Context } from "../index";
-import { fetchOneDevices } from "../http/deviceAPI";
-import { observer } from "mobx-react-lite";
-import { BsBasket3 } from "react-icons/bs";
-import { MdCurrencyRuble } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import { SHOP_ROUTE } from "../utils/const";
+import React, {useContext, useEffect, useState} from 'react';
+import {Button, Card, Col, Container, Row} from "react-bootstrap";
+import {Context} from "../index";
+import {fetchOneDevices} from "../http/deviceAPI";
+import {observer} from "mobx-react-lite";
+import {BsBasket3} from "react-icons/bs";
+import {useNavigate} from "react-router-dom";
+import {SHOP_ROUTE} from "../utils/const";
 import DeviceItem from "../components/DeviceItem/DeviceItem";
-import cls from "../components/DeviceList/DeviceList.module.scss";
 
 const Basket = observer(() => {
     const { device } = useContext(Context);
@@ -59,8 +57,7 @@ const Basket = observer(() => {
                                 device={device}
                             >
                                 <Button
-                                    className={cls.btnBuy}
-                                    variant="outline-warning"
+                                    variant="outline-danger"
                                     onClick={() => removeFromBasket(device.id)}
                                 >
                                     <BsBasket3/>
@@ -85,7 +82,9 @@ const Basket = observer(() => {
                                         <Card.Subtitle>{totalPrice} ₽</Card.Subtitle>
                                     </Col>
                                 </Row>
-                                <Button className={'mt-2'}>Перейти к оформлению</Button>
+                                <div className="d-grid">
+                                    <Button className={'mt-2'}>Перейти к оформлению</Button>
+                                </div>
                             </Card.Body>
                         </Card>
                     </Col>

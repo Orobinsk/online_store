@@ -4,22 +4,24 @@ import {Context} from "../index";
 import {ListGroup} from "react-bootstrap";
 
 const TypeBar = observer(() => {
-    const {device}=useContext(Context)
+    const {device} = useContext(Context)
 
-    const selectType=(type)=>{
-        if (device.selectedType!==type){
-            device.setSelectedType(type)
+
+    const selectType = (type) => {
+        if (!device.selectedType.includes(type)) {
+            device.setSelectedType([...device.selectedType, type])
+        } else {
+            device.setSelectedType(device.selectedType.filter((oldType) => oldType !== type))
         }
-        else  device.setSelectedType('')
     }
     return (
         <ListGroup>
-            {device.types.map(type=>
+            {device.types.map(type =>
                 <ListGroup.Item
-                    style={{cursor:"pointer"}}
-                    active={type.id=== device.selectedType.id}
+                    style={{cursor: "pointer"}}
+                    active={device.selectedType.some((prevType) => prevType.name.includes(type.name))}
                     key={type.id}
-                    onClick={()=> selectType(type)}
+                    onClick={() => selectType(type)}
                 >
                     {type.name}
                 </ListGroup.Item>

@@ -3,7 +3,7 @@ import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import {authRoutes, publicRoutes} from "../routes";
 import {SHOP_ROUTE} from "../utils/const";
 import {Context} from "../index";
-import NavBar from "./NavBar";
+import NavBar from "./Navbar/NavBar";
 
 const AppRouter = () => {
     const {user}=useContext(Context)
