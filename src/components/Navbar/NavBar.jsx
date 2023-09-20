@@ -7,7 +7,7 @@ import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import cls from './Navbar.module.scss'
 
 const NavBar = observer(() => {
-    const {user,device} = useContext(Context)
+    const {user, device} = useContext(Context)
     const navigate = useNavigate()
 
     const logOut = () => {
@@ -15,51 +15,51 @@ const NavBar = observer(() => {
         user.setIsAuth(false)
         localStorage.removeItem('token')
     }
-
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
                 <NavLink style={{color: 'white'}} to={SHOP_ROUTE}>КупиДевайс</NavLink>
-                {user.isAuth ?
-                    <Nav className="ml-auto" style={{color: 'white'}}>
+                <Nav className="ml-auto" style={{color: 'white'}}>
+                    {user.user.data && user.user.data.role === 'admin' &&
                         <Button
                             variant={"outline-light"}
-                             onClick={() => navigate(ADMIN_ROUTE)}
+                            onClick={() => navigate(ADMIN_ROUTE)}
                         >
                             Админ панель
                         </Button>
+                    }
+                    <Button
+                        variant={"outline-light"}
+                        onClick={() => navigate(BASKET_ROUTE)}
+                        className="ms-2"
+                    >
+                        <div className={cls.basket}>
+                            Корзина
+                            {device.basket.length > 0 &&
+                                <div className={cls.basketBadge}>
+                                    {device.basket.length}
+                                </div>
+                            }
+                        </div>
+                    </Button>
+                    {user.isAuth ?
                         <Button
                             variant={"outline-light"}
-                            onClick={() => navigate(BASKET_ROUTE)}
-                            className="ms-2"
-                        >
-                            <div className={cls.basket}>
-                                Корзина
-                                {device.basket.length>0 &&
-                                    <div className={cls.basketBadge}>
-                                        {device.basket.length}
-                                    </div>
-                                }
-                            </div>
-                        </Button>
-                        <Button
-                            variant={"outline-light"}
-                             onClick={() => logOut()}
+                            onClick={() => logOut()}
                             className="ms-2"
                         >
                             Выйти
                         </Button>
-                    </Nav>
-                    :
-                    <Nav className="ml-auto" style={{color: 'white'}}>
+                        :
                         <Button
+                            className="ms-2"
                             variant={"outline-light"}
                             onClick={() => navigate(LOGIN_ROUTE)}
                         >
                             Войти
                         </Button>
-                    </Nav>
-                }
+                    }
+                </Nav>
             </Container>
         </Navbar>
     );

@@ -9,7 +9,8 @@
     {
       "id": 2,
       "username": "newUser2",
-      "password": "321"
+      "password": "321",
+      "role": "user"
     }
   ],
   "types": [
