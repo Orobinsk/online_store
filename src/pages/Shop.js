@@ -22,6 +22,7 @@ const Shop = observer(() => {
         return () => {
             device.setSelectedBrand([])
             device.setSelectedType([])
+            device.setFilterPrice({min:0,max:1000000})
         }
     }, [])
 

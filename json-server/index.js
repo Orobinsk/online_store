@@ -126,9 +126,11 @@ server.get('/shop/devices', (req, res) => {
         }
 
         //Фильтрация по цене
-        // if(filterPrice){
-        devices=devices.filter((device)=>Number(device.price)>Number(filterPrice.min) && Number(device.price)<Number(filterPrice.max))
-        // }
+        if (filterPrice.max === '') {
+            filterPrice.max = 1000000
+        }
+        devices = devices.filter((device) => Number(device.price) >= Number(filterPrice.min) && Number(device.price) <= Number(filterPrice.max))
+
 
         const totalDevices = devices.length;
         // По умолчанию, если limit не указан, возвращаем все устройства
@@ -140,7 +142,6 @@ server.get('/shop/devices', (req, res) => {
 
         // Преобразуем limit в числа
         limit = parseInt(limit, 10);
-
 
 
         // Ограничиваем количество возвращаемых устройств
