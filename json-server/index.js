@@ -110,11 +110,13 @@ server.get('/shop/devices', (req, res) => {
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
         let {devices = []} = db;
 
-        let {typeName, brandName, limit, devicePage} = req.query;
+        let {typeName, brandName, limit, devicePage, filterPrice} = req.query;
 
         typeName = JSON.parse(typeName)
         brandName = JSON.parse(brandName)
-        console.log(brandName)
+        filterPrice = JSON.parse(filterPrice)
+        console.log(filterPrice)
+
         // Фильтрация по typeName и brandName
         if (typeName && typeName.length > 0) {
             devices = devices.filter(device => typeName.some(type => device.type.includes(type.name)));
@@ -122,6 +124,12 @@ server.get('/shop/devices', (req, res) => {
         if (brandName && brandName.length > 0) {
             devices = devices.filter(device => brandName.some(brand => device.brand.includes(brand.name)));
         }
+
+        //Фильтрация по цене
+        // if(filterPrice){
+        devices=devices.filter((device)=>Number(device.price)>Number(filterPrice.min) && Number(device.price)<Number(filterPrice.max))
+        // }
+
         const totalDevices = devices.length;
         // По умолчанию, если limit не указан, возвращаем все устройства
         if (!limit) {
@@ -130,9 +138,10 @@ server.get('/shop/devices', (req, res) => {
 
         let offset = limit * devicePage
 
-        // Преобразуем limit и offset в числа
+        // Преобразуем limit в числа
         limit = parseInt(limit, 10);
-        // offset = parseInt(offset, 10) || 0;
+
+
 
         // Ограничиваем количество возвращаемых устройств
         const limitedDevices = devices.slice(offset, offset + limit);

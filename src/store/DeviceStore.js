@@ -6,12 +6,12 @@ export default class DeviceStore{
         this._brands=[]
         this._devices=[]
         this._selectedType = []
-        // this._selectedBrand = [{id:322,name:"Samsung"}]
         this._selectedBrand = []
         this._page=1
         this._totalCount=0
         this._limit=3
         this._basket=[]
+        this._filterPrice={min:0,max:1000000}
         makeAutoObservable(this)
     }
 
@@ -41,6 +41,9 @@ export default class DeviceStore{
     setBasket(device){
         this._basket=device
     }
+    setFilterPrice(price){
+        this._filterPrice=price
+    }
 
     get types(){
         return this._types
@@ -68,5 +71,8 @@ export default class DeviceStore{
     }
     get basket() {
         return this._basket
+    }
+    get filterPrice() {
+        return this._filterPrice
     }
 }

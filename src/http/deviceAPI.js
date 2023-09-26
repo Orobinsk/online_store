@@ -3,8 +3,7 @@ import {$host} from "./index";
 
 
 export const createType = async (type) => {
-    const response = await $host.post('/shop/type', type)
-    return response
+    return await $host.post('/shop/type', type)
 }
 
 export const createBrand = async (brand) => {
@@ -27,13 +26,14 @@ export const fetchBrands = async () => {
     return response.data
 }
 
-export const fetchDevices = async (typeName,brandName,limit, devicePage) => {
+export const fetchDevices = async (typeName,brandName,limit, devicePage,filterPrice) => {
     const response = await $host.get('/shop/devices',{
         params: {
             typeName,
             brandName,
             limit,
             devicePage,
+            filterPrice
         },
     })
     return response.data
@@ -43,8 +43,3 @@ export const fetchOneDevices = async (id) => {
     const response = await $host.get('/shop/devices/' + id)
      return response.data
 }
-
-// export const fetchTest = async () => {
-//     const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
-//     return response.data
-// }

@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {Pagination} from "react-bootstrap";
 
-const Pages = observer(() => {
+const PagePagination = observer(() => {
     const {device} = useContext(Context)
     const pageCount = Math.ceil(device.totalCount / device.limit)
     const pages = []
@@ -27,4 +27,4 @@ const Pages = observer(() => {
     );
 });
 
-export default Pages;
+export default PagePagination;
