@@ -12,6 +12,8 @@ export default class DeviceStore{
         this._limit=3
         this._basket=[]
         this._filterPrice={min:0,max:1000000}
+        this._sort='сначала дорогие'
+        this._search=''
         makeAutoObservable(this)
     }
 
@@ -44,6 +46,12 @@ export default class DeviceStore{
     setFilterPrice(price){
         this._filterPrice=price
     }
+    setSort(sort){
+        this._sort=sort
+    }
+    setSearch(search){
+        this._search=search
+    }
 
     get types(){
         return this._types
@@ -74,5 +82,11 @@ export default class DeviceStore{
     }
     get filterPrice() {
         return this._filterPrice
+    }
+    get sort() {
+        return this._sort
+    }
+    get search() {
+        return this._search
     }
 }

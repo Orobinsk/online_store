@@ -1,27 +1,47 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
-import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../../utils/const";
-import {Context} from "../../index";
+import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/const";
+import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import {Button, Container, Nav, Navbar} from "react-bootstrap";
-import cls from './Navbar.module.scss'
+import {Badge, Button, Container, Form, InputGroup, Nav, Navbar} from "react-bootstrap";
+import {BsSearch} from "react-icons/bs";
 
 const NavBar = observer(() => {
     const {user, device} = useContext(Context)
     const navigate = useNavigate()
+    const [searchValue, setSearchValue] = useState('');
 
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
         localStorage.removeItem('token')
     }
+
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            device.setSearch(searchValue)
+        };
+
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
                 <NavLink style={{color: 'white'}} to={SHOP_ROUTE}>КупиДевайс</NavLink>
                 <Nav className="ml-auto" style={{color: 'white'}}>
+                    <Form onSubmit={handleSubmit}>
+                        <InputGroup className="d-flex">
+                            <Form.Control
+                                type="search"
+                                placeholder="Поиск"
+                                aria-label="Search"
+                                value={searchValue}
+                                onChange={(e)=>setSearchValue(e.target.value)}
+                            />
+                            <Button type={"submit"} variant="outline-light"><BsSearch/></Button>
+                        </InputGroup>
+                    </Form>
                     {user.user.data && user.user.data.role === 'admin' &&
                         <Button
+                            className="ms-2"
                             variant={"outline-light"}
                             onClick={() => navigate(ADMIN_ROUTE)}
                         >
@@ -33,14 +53,10 @@ const NavBar = observer(() => {
                         onClick={() => navigate(BASKET_ROUTE)}
                         className="ms-2"
                     >
-                        <div className={cls.basket}>
-                            Корзина
-                            {device.basket.length > 0 &&
-                                <div className={cls.basketBadge}>
-                                    {device.basket.length}
-                                </div>
-                            }
-                        </div>
+                        Корзина
+                        {device.basket.length > 0 &&
+                            <Badge pill bg="warning">{device.basket.length}</Badge>
+                        }
                     </Button>
                     {user.isAuth ?
                         <Button

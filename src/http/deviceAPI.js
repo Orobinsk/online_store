@@ -26,14 +26,16 @@ export const fetchBrands = async () => {
     return response.data
 }
 
-export const fetchDevices = async (typeName,brandName,limit, devicePage,filterPrice) => {
+export const fetchDevices = async (search, typeName,brandName,limit, devicePage,filterPrice,sort) => {
     const response = await $host.get('/shop/devices',{
         params: {
+            search,
             typeName,
             brandName,
             limit,
             devicePage,
-            filterPrice
+            filterPrice,
+            sort
         },
     })
     return response.data

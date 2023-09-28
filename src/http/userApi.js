@@ -9,7 +9,7 @@ export const registration = async (username, password) => {
 }
 
 export const login=async(username,password)=>{
-    const response=await $host.post('/login', {username,password})
+    const response=await $host.post('auth/login', {username,password})
     localStorage.setItem('token',JSON.stringify(response.data))
     return response
 }
