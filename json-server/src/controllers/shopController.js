@@ -36,7 +36,6 @@ function getDevices(req, res) {
         typeName = JSON.parse(typeName)
         brandName = JSON.parse(brandName)
         filterPrice = JSON.parse(filterPrice)
-        console.log(search, typeName, brandName, limit, devicePage, filterPrice, sort)
 
         //Фильтрация по запросу search
         devices=devices.filter(device=>device.name.toLowerCase().includes(search.toLowerCase()))

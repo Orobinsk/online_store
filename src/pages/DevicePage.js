@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {useParams} from "react-router-dom";
-import {fetchOneDevices} from "../http/deviceAPI";
+ import {fetchOneDevices} from "../http/deviceAPI";
 import {Context} from "../index";
 import {BsCheckLg} from "react-icons/bs";
 import {observer} from "mobx-react-lite";

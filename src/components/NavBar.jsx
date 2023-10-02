@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/const";
-import {Context} from "../index";
+ import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {Badge, Button, Container, Form, InputGroup, Nav, Navbar} from "react-bootstrap";
 import {BsSearch} from "react-icons/bs";
@@ -27,9 +27,12 @@ const NavBar = observer(() => {
             <Container>
                 <NavLink style={{color: 'white'}} to={SHOP_ROUTE}>КупиДевайс</NavLink>
                 <Nav className="ml-auto" style={{color: 'white'}}>
-                    <Form onSubmit={handleSubmit}>
+                    <Form
+                        onSubmit={handleSubmit}
+                    >
                         <InputGroup className="d-flex">
                             <Form.Control
+                                data-testid={'search'}
                                 type="search"
                                 placeholder="Поиск"
                                 aria-label="Search"
