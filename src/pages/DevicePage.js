@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {useParams} from "react-router-dom";
- import {fetchOneDevices} from "../http/deviceAPI";
+import {fetchOneDevices} from "../http/deviceAPI";
 import {Context} from "../index";
 import {BsCheckLg} from "react-icons/bs";
 import {observer} from "mobx-react-lite";
@@ -29,14 +29,16 @@ const DevicePage = observer(() => {
     return (
         <Container className="mt-3">
             <h1>{gadget.name}</h1>
-            <Card className={'p-4'}>
+            <Card className={'p-3'}>
                 <Row className={'d-flex align-items-center'}>
+                    <Col sm={8} md={4}>
+                        <Container >
+                            <Image fluid src={gadget.img}/>
+                        </Container>
 
-                    <Col>
-                        <Image width={300} height={300} src={gadget.img}/>
                     </Col>
-                    <Col md={5}>
-                        <div  className={'d-flex flex-column justify-content-between align-content-between'}>
+                    <Col md={5} className={'ms-auto'}>
+                        <div className={'d-flex flex-column justify-content-between align-content-between'}>
                             <h2 className="text-black-50 text-end mb-5">{gadget.brand}</h2>
                             <Card>
                                 <Card.Body className="d-flex justify-content-between">
