@@ -1,5 +1,5 @@
-import React, {useContext, useEffect} from 'react';
-import {Col, Container, Row} from "react-bootstrap";
+import React, {useContext, useEffect, useState} from 'react';
+import {Col, Container, Offcanvas, Row} from "react-bootstrap";
 import TypeBar from "../components/TypeBar";
 import DeviceList from "../components/DeviceList";
 import {observer} from "mobx-react-lite";
@@ -11,6 +11,9 @@ import SortBar from "../components/SortBar";
 
 const Shop = observer(() => {
     const {device} = useContext(Context)
+    const [showFilter, setShowFilter] = useState(false)
+
+    const handleClose = () => setShowFilter(false)
 
     const fetchData = async () => {
         try {
@@ -34,12 +37,12 @@ const Shop = observer(() => {
 
     useEffect(() => {
         fetchData();
-        fetchTypes().then(types=> device.setTypes(types))
+        fetchTypes().then(types => device.setTypes(types))
         fetchBrands().then(brands => device.setBrands(brands))
         return () => {
             device.setSelectedBrand([]);
             device.setSelectedType([]);
-            device.setFilterPrice({ min: 0, max: 1000000 });
+            device.setFilterPrice({min: 0, max: 1000000});
         };
     }, []);
 
@@ -50,14 +53,24 @@ const Shop = observer(() => {
     return (
         <Container>
             <Row className="mt-2">
-                <Col md={3}>
-                    <TypeBar/>
-                    <FilterBar
-                         updateDeviceList={fetchData}
-                    />
+                <Col lg={3}>
+                    <Offcanvas
+                        show={showFilter}
+                        responsive="lg"
+                        onHide={handleClose}
+                    >
+                        <Offcanvas.Header closeButton className='d-flex d-lg-none align-items-center justify-content-between ps-2 pe-2' onClick={handleClose}>
+                            <Offcanvas.Title>Фильтры </Offcanvas.Title>
+                        </Offcanvas.Header>
+                        <TypeBar/>
+                        <FilterBar
+                            updateDeviceList={fetchData}
+                        />
+                    </Offcanvas>
+
                 </Col>
-                <Col md={9}>
-                    <SortBar/>
+                <Col lg={9}>
+                    <SortBar setShowFilter={setShowFilter}/>
                     <DeviceList/>
                     <PagePagination/>
                 </Col>
