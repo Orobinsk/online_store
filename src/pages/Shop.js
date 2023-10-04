@@ -64,6 +64,7 @@ const Shop = observer(() => {
                         </Offcanvas.Header>
                         <TypeBar/>
                         <FilterBar
+                            closeFilterBar={handleClose}
                             updateDeviceList={fetchData}
                         />
                     </Offcanvas>

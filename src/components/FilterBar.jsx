@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import AccordionBody from "react-bootstrap/AccordionBody";
 
-const FilterBar = observer(({updateDeviceList}) => {
+const FilterBar = observer(({updateDeviceList, closeFilterBar}) => {
     const {device} = useContext(Context);
     const [brands, setBrands] = useState([])
     const [price, setPrice] = useState({
@@ -29,12 +29,14 @@ const FilterBar = observer(({updateDeviceList}) => {
         device.setFilterPrice({min: 0, max: 1000000})
         device.setSelectedBrand([]);
         updateDeviceList();
+        closeFilterBar()
     };
 
     const apply = () => {
         device.setSelectedBrand(brands)
         device.setFilterPrice(price)
         updateDeviceList()
+        closeFilterBar()
     }
 
     return (
