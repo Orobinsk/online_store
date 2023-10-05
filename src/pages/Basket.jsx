@@ -3,10 +3,9 @@ import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import {Context} from "../index";
 import {fetchOneDevices} from "../http/deviceAPI";
 import {observer} from "mobx-react-lite";
-import {BsBasket3} from "react-icons/bs";
 import {useNavigate} from "react-router-dom";
 import {SHOP_ROUTE} from "../utils/const";
-import DeviceItem from "../components/DeviceItem/DeviceItem";
+import DeviceItem from "../components/DeviceItem";
 
 const Basket = observer(() => {
     const { device } = useContext(Context);
@@ -21,9 +20,7 @@ const Basket = observer(() => {
                     return await fetchOneDevices(id);
                 })
             );
-
             setDevices(deviceData);
-
             const calculatedTotalPrice = deviceData.reduce((total, currDevice) => {
                 const devicePrice = Number(currDevice.price.replace(/\s+/g, ''));
                 if (!isNaN(devicePrice)) {
@@ -40,34 +37,21 @@ const Basket = observer(() => {
         }
     }, [device.basket]);
 
-    const removeFromBasket = (id) => {
-        const filteredDevice = device.basket.filter((deviceId) => deviceId !== id);
-        device.setBasket(filteredDevice);
-    };
-
     return (
         <Container>
             <h1>Корзина</h1>
             {device.basket.length ? (
                 <Row>
                     <Col md={8}>
-                        {devices.map((device) => (
+                        {devices.map((deviceItem) => (
                             <DeviceItem
-                                key={device.id}
-                                device={device}
-                            >
-                                <Button
-                                    variant="outline-danger"
-                                    onClick={() => removeFromBasket(device.id)}
-                                >
-                                    <BsBasket3/>
-                                </Button>
-                                <Card.Title>{device.price} ₽</Card.Title>
-                            </DeviceItem>
+                                key={deviceItem.id}
+                                deviceItem={deviceItem}
+                          />
                         ))}
                     </Col>
                     <Col>
-                        <Card className={'mb-3 p-3'}>
+                        <Card className={'mt-3 p-3'}>
                             <Card.Title>Условия заказа</Card.Title>
                             <Card.Body>
                                 <p>Итого:</p>

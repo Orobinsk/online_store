@@ -55,7 +55,6 @@ const DevicePage = observer(() => {
                             </Card>
                         </div>
                     </Col>
-
                 </Row>
             </Card>
 

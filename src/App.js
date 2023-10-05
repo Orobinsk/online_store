@@ -3,23 +3,26 @@ import {useContext, useEffect, useState} from "react";
 import {Context} from "./index";
 import {Container, Spinner} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
+import {check} from "./http/userApi";
 
 const App = observer(() => {
     const {user} = useContext(Context)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        let userData=localStorage.getItem('token')
-        if(userData){
-                user.setUser(user)
+        const tokenInLocalStorage= localStorage.getItem('token')
+        if (tokenInLocalStorage){
+            check().then(data=>{
+                user.setUser(data)
                 user.setIsAuth(true)
-            }
+            })
+        }
         setLoading(false)
     }, [])
 
     if (loading) {
         return(
-            <Container >
+            <Container className='d-flex align-items-center justify-content-center mt-5' >
                 <Spinner animation={"grow"}/>
             </Container>
         )

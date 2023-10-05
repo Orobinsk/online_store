@@ -35,7 +35,7 @@ const NavBar = observer(() => {
                         <Form
                             onSubmit={handleSubmit}
                         >
-                            <InputGroup className="d-flex">
+                            <InputGroup className="d-flex mt-1 mt-lg-0">
                                 <Form.Control
                                     data-testid={'search'}
                                     type="search"
@@ -47,9 +47,9 @@ const NavBar = observer(() => {
                                 <Button type={"submit"} variant="outline-light"><BsSearch/></Button>
                             </InputGroup>
                         </Form>
-                        {user.user.data && user.user.data.role === 'admin' &&
+                        {user.user && user.user.role === 'admin' &&
                             <Button
-                                className="ms-md-2"
+                                className="mt-1 ms-lg-2 mt-lg-0"
                                 variant={"outline-light"}
                                 onClick={() => navigate(ADMIN_ROUTE)}
                             >
@@ -61,7 +61,7 @@ const NavBar = observer(() => {
                         <Button
                             variant={"outline-light"}
                             onClick={() => navigate(BASKET_ROUTE)}
-                            className="ms-md-2"
+                            className="mt-1 ms-lg-2 mt-lg-0"
                         >
                             <div className='d-flex align-items-center justify-content-center'>
                                 <SlBasket/><span className='ms-1'>Корзина</span>
@@ -76,7 +76,7 @@ const NavBar = observer(() => {
                             <Button
                                 variant={"outline-light"}
                                 onClick={() => logOut()}
-                                className="ms-md-2"
+                                className="mt-1 ms-lg-2 mt-lg-0"
                             >
                                 <div className='d-flex align-items-center justify-content-center'>
                                 <CgProfile/> <span className='ms-1'>Выйти</span>
@@ -84,7 +84,7 @@ const NavBar = observer(() => {
                             </Button>
                             :
                             <Button
-                                className="ms-md-2"
+                                className="mt-1 ms-lg-2 mt-lg-0"
                                 variant={"outline-light"}
                                 onClick={() => navigate(LOGIN_ROUTE)}
                             >

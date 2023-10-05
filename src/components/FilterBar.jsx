@@ -1,16 +1,28 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Accordion, Button, Card, Form} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import AccordionBody from "react-bootstrap/AccordionBody";
+import fetchDevicesData from "../utils/fetchDevicesData";
+import {fetchBrands, fetchTypes} from "../http/deviceAPI";
 
-const FilterBar = observer(({updateDeviceList, closeFilterBar}) => {
+const FilterBar = observer(({closeFilterBar}) => {
     const {device} = useContext(Context);
-    const [brands, setBrands] = useState([])
+    const [brands, setBrands] = useState(device.selectedBrand)
     const [price, setPrice] = useState({
         min: '',
         max: ''
     })
+
+    useEffect(() => {
+        fetchTypes().then(types => device.setTypes(types))
+        fetchBrands().then(brands => device.setBrands(brands))
+        return () => {
+            device.setSelectedBrand([]);
+            device.setSelectedType([]);
+            device.setFilterPrice({min: 0, max: 1000000});
+        };
+    }, []);
 
     const selectBrand = (brand) => {
         if (!brands.includes(brand)) {
@@ -28,14 +40,14 @@ const FilterBar = observer(({updateDeviceList, closeFilterBar}) => {
         });
         device.setFilterPrice({min: 0, max: 1000000})
         device.setSelectedBrand([]);
-        updateDeviceList();
+        fetchDevicesData(device);
         closeFilterBar()
     };
 
     const apply = () => {
         device.setSelectedBrand(brands)
         device.setFilterPrice(price)
-        updateDeviceList()
+        fetchDevicesData(device);
         closeFilterBar()
     }
 
@@ -59,7 +71,6 @@ const FilterBar = observer(({updateDeviceList, closeFilterBar}) => {
                         </Form>
                     </AccordionBody>
                 </Accordion.Item>
-
                 <Accordion.Item eventKey="1">
                     <Accordion.Header>
                         Цена
