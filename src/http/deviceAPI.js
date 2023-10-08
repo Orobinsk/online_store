@@ -1,18 +1,16 @@
-import {$host} from "./index";
-//import jwt_decode from 'jwt-decode';
-
+import {$authHost, $host} from "./index";
 
 export const createType = async (type) => {
-    return await $host.post('/shop/type', type)
+    return await $authHost.post('/shop/type', type)
 }
 
 export const createBrand = async (brand) => {
-    const response = await $host.post('/shop/brand', brand)
+    const response = await $authHost.post('/shop/brand', brand)
     return response.data
 }
 
 export const createDevice = async (device) => {
-    const response = await $host.post('/shop/device', device)
+    const response = await $authHost.post('/shop/device', device)
     return response.data
 }
 

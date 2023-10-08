@@ -15,13 +15,9 @@ export const login = async (username, password) => {
 }
 
 export const check = async () => {
-    try {
-        const {data} = await $authHost.get('auth/check');
-        localStorage.setItem('token', data);
-        return jwt_decode(data);
-    } catch (error) {
-        console.error('Ошибка в функции check:', error);
-    }
+    const {data} = await $authHost.get('auth/check');
+    localStorage.setItem('token', data);
+    return jwt_decode(data);
 }
 
 

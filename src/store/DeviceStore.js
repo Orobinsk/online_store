@@ -11,7 +11,7 @@ export default class DeviceStore{
         this._totalCount=0
         this._limit=3
         this._basket=[]
-        this._filterPrice={min:0,max:1000000}
+        this._filterPrice={min:"",max:""}
         this._sort='сначала дорогие'
         this._search=''
         makeAutoObservable(this)

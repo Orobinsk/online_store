@@ -9,7 +9,7 @@
 
 ## implemented:
 - work with the server;
-- authorization
+- (JWT) authentication
 - admin panel
 - state management;
 - sort/search/filter;
