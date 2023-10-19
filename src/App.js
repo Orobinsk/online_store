@@ -1,4 +1,4 @@
-import AppRouter from "./components/AppRouter";
+import AppRouter from "./providers/Router/AppRouter";
 import {useContext, useEffect, useState} from "react";
 import {Context} from "./index";
 import {Container, Spinner} from "react-bootstrap";
@@ -28,7 +28,7 @@ const App = observer(() => {
         )
     }
     return (
-            <AppRouter/>
+    <AppRouter/>
     );
 })
 
