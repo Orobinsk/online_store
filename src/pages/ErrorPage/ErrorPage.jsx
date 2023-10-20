@@ -8,7 +8,7 @@ const ErrorPage = () => {
         location.reload();
     }
     return (
-        <div>
+        <div className={'text-center p-5'}>
             <p>Возникла непредвиденная ошибка</p>
             <Button variant={"primary"} onClick={reloadPage}>Обновить страницу</Button>
         </div>

@@ -1,9 +1,9 @@
-import AdminPage from "./pages/AdminPage/components/AdminPage";
-import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "./utils/const";
-import BasketPage from "./pages/BasketPage/BasketPage";
-import ShopPage from "./pages/ShopPage/ShopPage";
-import DevicePage from "./pages/DevicePage/DevicePage";
-import ProfilePage from "./pages/AuthPage/ProfilePage";
+import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, PROFILE_ROUTE, SHOP_ROUTE} from "./utils/const";
+import {BasketPage} from "./pages/BasketPage";
+import {DevicePage} from "./pages/DevicePage";
+import {ShopPage} from "./pages/ShopPage";
+import {ProfilePage} from "./pages/ProfilePage";
+import {AdminPage} from "./pages/AdminPage";
 
 export const authRoutes = [
     {
@@ -18,11 +18,7 @@ export const publicRoutes = [
         element: <ShopPage/>
     },
     {
-        path: LOGIN_ROUTE,
-        element: <ProfilePage/>
-    },
-    {
-        path: REGISTRATION_ROUTE,
+        path: PROFILE_ROUTE,
         element: <ProfilePage/>
     },
     {

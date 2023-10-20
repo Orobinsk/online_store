@@ -1,5 +1,5 @@
 import AppRouter from "./providers/Router/AppRouter";
-import {useContext, useEffect, useState} from "react";
+import React, {Suspense, useContext, useEffect, useState} from "react";
 import {Context} from "./index";
 import {Container, Spinner} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
@@ -28,7 +28,9 @@ const App = observer(() => {
         )
     }
     return (
-    <AppRouter/>
+            <Suspense fallback="">
+                <AppRouter/>
+            </Suspense>
     );
 })
 

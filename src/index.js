@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import UserStore from "./store/UserStore";
 import DeviceStore from "./store/DeviceStore";
+import ErrorBoundary from "./providers/ErrorBoundary/ErrorBoundary";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -15,7 +16,9 @@ root.render(
             user: new UserStore(),
             device: new DeviceStore(),
         }}>
-            <App/>
+            <ErrorBoundary>
+                <App/>
+            </ErrorBoundary>
         </Context.Provider>
     </React.StrictMode>
 );
