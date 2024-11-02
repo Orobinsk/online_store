@@ -18,7 +18,6 @@
 
 ## Description:
 This is a full-featured application - an online electronics store.
-You can view the application at the following link:http://91.197.0.165/
 
 Server:https://github.com/Orobinsk/server_online_store
 
